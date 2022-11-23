@@ -1,4 +1,4 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <windows.h>
 #include <conio.h>
 #include <stdlib.h>
@@ -45,7 +45,7 @@ void CursorView(bool b)
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
 }
 
-void title(void); //게임 시작화면 
+int title(void); //게임 시작화면 
 void reset(void); //게임을 초기화 
 void draw_map(void); // 게임판 테두리를 그림 
 void move(int dir); //뱀머리를 이동 
@@ -62,7 +62,7 @@ int main() {
 }
 
 ///////////////////////////MAIN END////////////////////////////////
-void title(void) {
+int title(void) {
     int i, j;
 
     while (_kbhit()) _getch(); //버퍼에 있는 키값을 버림 
@@ -85,7 +85,7 @@ void title(void) {
     while (1) {
         if (_kbhit()) { //키입력받음 
             key = _getch();
-            if (key == ESC) exit(0); // ESC키면 종료 
+            if (key == ESC) return 0; // ESC키면 종료 
             else break; //아니면 그냥 계속 진행 
         }
         gotoxy(MAP_X + (MAP_WIDTH / 2) - 7, MAP_Y + 9, " < PRESS ANY KEY TO START > ");
@@ -94,7 +94,8 @@ void title(void) {
         Sleep(400);
 
     }
-    reset(); // 게임을 초기화  
+    reset(); // 게임을 초기화 
+    return 1;
 }
 
 void reset(void) {
@@ -254,40 +255,53 @@ void status(void) { //각종 스텟을 볼수 있는 함수
 
 int MainGame()
 {
-    CursorView(FALSE);
-    title();
+    while (1)
+    {
+        CursorView(FALSE);
+        if (title() == 1)
+        {
+            while (1) {
+                int main_page = 0;
 
-    while (1) {
-        if (_kbhit()) do { key = _getch(); } while (key == 224); //키 입력받음
-        Sleep(speed);
+                if (_kbhit()) do { key = _getch(); } while (key == 224); //키 입력받음
+                Sleep(speed);
 
-        switch (key) { //입력받은 키를 파악하고 실행  
-        case LEFT:
-        case RIGHT:
-        case UP:
-        case DOWN:
-            if ((dir == LEFT && key != RIGHT) || (dir == RIGHT && key != LEFT) || (dir == UP && key != DOWN) ||
-                (dir == DOWN && key != UP))//180회전이동을 방지하기 위해 필요. 
-                dir = key;
-            key = 0; // 키값을 저장하는 함수를 reset 
-            break;
-        case PAUSE: // P키를 누르면 일시정지 
-            pause();
-            break;
-        case 115: //S키를 누르면 개발자용 status를 활성화 시킴  
-            if (status_on == 0) status_on = 1;
-            else status_on = 0;
-            key = 0;
-            break;
-        case ESC: //ESC키를 누르면 프로그램 종료 
-            CursorView(TRUE);
-            return 0;
+                switch (key) { //입력받은 키를 파악하고 실행  
+                case LEFT:
+                case RIGHT:
+                case UP:
+                case DOWN:
+                    if ((dir == LEFT && key != RIGHT) || (dir == RIGHT && key != LEFT) || (dir == UP && key != DOWN) ||
+                        (dir == DOWN && key != UP))//180회전이동을 방지하기 위해 필요. 
+                        dir = key;
+                    key = 0; // 키값을 저장하는 함수를 reset 
+                    break;
+                case PAUSE: // P키를 누르면 일시정지 
+                    pause();
+                    break;
+                case 115: //S키를 누르면 개발자용 status를 활성화 시킴  
+                    if (status_on == 0) status_on = 1;
+                    else status_on = 0;
+                    key = 0;
+                    break;
+                case ESC: //ESC키를 누르면 프로그램 종료 
+                    CursorView(TRUE);
+                    main_page = 1;
+                    break;
+                }
+                move(dir);
+
+                if (main_page == 1) { break; }
+
+                if (status_on == 1) status(); // status표시 
+            }
         }
-        move(dir);
+        else
+        {
+            break;
+        }
 
-        if (status_on == 1) status(); // status표시 
+        CursorView(TRUE);
     }
-
-    CursorView(TRUE);
     return 0;
 }

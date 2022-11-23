@@ -48,7 +48,7 @@ void CursorView(bool b)
 int title(void); //게임 시작화면 
 void reset(void); //게임을 초기화 
 void draw_map(void); // 게임판 테두리를 그림 
-void move(int dir); //뱀머리를 이동 
+int move(int dir); //뱀머리를 이동 
 void pause(void); //일시정지 
 void game_over(void); //게임 오버를 확인 
 void food(void); // 음식 생성 
@@ -131,7 +131,7 @@ void draw_map(void) { //맵 테두리 그리는 함수
     }
 }
 
-void move(int dir) {
+int move(int dir) {
     int i;
 
     if (x[0] == food_x && y[0] == food_y) { //food와 충돌했을 경우 
@@ -143,13 +143,13 @@ void move(int dir) {
     }
     if (x[0] == 0 || x[0] == MAP_WIDTH - 1 || y[0] == 0 || y[0] == MAP_HEIGHT - 1) { //벽과 충돌했을 경우 
         game_over();
-        return; //game_over에서 게임을 다시 시작하게 되면 여기서부터 반복되므로 
+        return 0; //game_over에서 게임을 다시 시작하게 되면 여기서부터 반복되므로 
         //return을 사용하여 move의 나머지 부분이 실행되지 않도록 합니다. 
     }
     for (i = 1; i < length; i++) { //자기몸과 충돌했는지 검사 
         if (x[0] == x[i] && y[0] == y[i]) {
             game_over();
-            return;
+            return 0;
         }
     }
 
@@ -204,7 +204,6 @@ void game_over(void) { //게임종료 함수
     Sleep(500);
     while (_kbhit()) _getch();
     key = _getch();
-    title();
 }
 
 void food(void) {
@@ -258,6 +257,7 @@ int MainGame()
     while (1)
     {
         CursorView(FALSE);
+
         if (title() == 1)
         {
             while (1) {
@@ -289,7 +289,11 @@ int MainGame()
                     main_page = 1;
                     break;
                 }
-                move(dir);
+
+                if (move(dir) == 0)
+                {
+                    main_page = 1;
+                }
 
                 if (main_page == 1) { break; }
 

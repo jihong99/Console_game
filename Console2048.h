@@ -6,21 +6,21 @@
 #include <fstream>
 #include <ctime>
 
-void playgame();                  // Initialize game
+void playgame();                  // 게임 생성
 
-void match(int** arr);            // Start new match
+void match(int** arr);            // 새로운 매치 시작
 
-void setColor(int color);         // Set Console text color
-void setCellColor(int a);         // Cell setColor set (depending on cell value)
-void printField(int** arr);       // Print field on the screen
-void randfill(int** arr);         // Add new number when move
+void setColor(int color);         // 콘솔text 색상
+void setCellColor(int a);         // Cell 색상
+void printField(int** arr);       // 게임모듈 출력
+void randfill(int** arr);         // 랜덤으로 숫자 배치
 
-bool check(int** arr);            // Is there any moves left
-void winMenu();                   // User got to 2048
+bool check(int** arr);            // 더이상 움직일 수 있는지
+void winMenu();                   // 2048 달성
 
-bool movefuncUP(int** arr);       // Shift cells up
-bool movefuncDOWN(int** arr);     // Shift cells down
-bool movefuncLEFT(int** arr);     // Shift cells left
-bool movefuncRIGHT(int** arr);    // Shift cells right
+bool movefuncUP(int** arr);       
+bool movefuncDOWN(int** arr);     
+bool movefuncLEFT(int** arr);     
+bool movefuncRIGHT(int** arr);    
 
-bool exitFunction();              // Question to user: exit or new game
+bool exitFunction();              

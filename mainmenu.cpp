@@ -1,6 +1,7 @@
 #include "Console2048.h"
 #include "ConsoleDino.h"
 #include "ConsoleSnake.h"
+#include "ConsoleTic.h"
 #include <iostream>
 #include <windows.h>
 
@@ -11,7 +12,8 @@ void gamelist() {
 	cout << "                                   1. 2048" << endl;
 	cout << "                                   2. DIno" << endl;
 	cout << "                                   3. Snake" << endl;
-	cout << "                                   6. Quit" << endl;
+	cout << "                                   4. TicTacToe" << endl;
+	cout << "                                   0. Quit" << endl;
 
 	cout << "==============================================================================" << endl;
 }
@@ -39,8 +41,14 @@ void startgame(int n) {
 		cout << "You selected Snake!" << endl;
 		printwait();
 		MainGame();
-	case 6:
-		;
+	case 4:
+		cout << "You selected TicTacToe!" << endl;
+		printwait();
+		maingame();
+	case 0:
+		cout << "You selected Quiting!" << endl;
+		cout << "Thank you!" << endl;
+		exit(1);
 	}
 }
 

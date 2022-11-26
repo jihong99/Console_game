@@ -1,25 +1,21 @@
-﻿// This is the realisation of Console "2048" Game using С++
-#include "Console2048.h"
+﻿#include "Console2048.h"
 #include "menu.h"
 
-#define N 4			// FIELD SIZE
+#define N 4			// 4x4 보드
 
 using namespace std;
 
 unsigned score;		// Current score
 unsigned highscore;	// Highest score
 
-bool proceed;		// Should game continue
-bool first2048;		// Does user got 2048
+bool proceed;
+bool first2048;		
 
-
-// Set Console text color
 void setColor(int color)
 {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)((15 << 4) | color));
 }
 
-// Cell setColor set (depending on cell value)
 void setCellColor(int a) {
 	switch (a) {
 	case 2:    setColor(4);  break;
@@ -37,13 +33,6 @@ void setCellColor(int a) {
 	}
 }
 
-
-// Print field on the screen
-// ---------
-// | 2 |   |
-// ---------
-// |   | 2 |
-// ---------
 void printField(int** arr) {
 	system("cls");
 	cout << "\n     Score:  ";
@@ -96,8 +85,6 @@ void printField(int** arr) {
 	cout << "-\n";
 }
 
-
-// Add new number when move
 void randfill(int** arr) {
 	srand(time(NULL));
 	int x;
@@ -115,8 +102,6 @@ void randfill(int** arr) {
 	}
 }
 
-
-// User got to 2048
 void winMenu() {
 	first2048 = false;
 	cout << "\nCongratulations! You won!\nKeep playing?\n";
@@ -126,17 +111,23 @@ void winMenu() {
 		cin >> r;
 		switch (r)
 		{
-		case 'y': case 'Y': case 'Д': case 'д': proceed = 1; ind = 0; break;	// Continue match
-		case 'n': case 'N': case 'Н': case 'н': proceed = 0; ind = 0; break;	// End match
-		default: cout << "Enter answer in y/n form: ";
+		case 'y': case 'Y': {
+			proceed = 1;
+			ind = 0;
+			break;
+		}
+		case 'n': case 'N': {
+			proceed = 0;
+			ind = 0;
+			break;
+		}
+		default: 
+			cout << "Enter answer in y/n form: ";
 		}
 	} while (ind);
 }
 
-
-// Is there any moves left
 bool check(int** arr) {
-	// Empty cell
 	for (int i = 0; i < N; i++)
 	{
 		for (int j = 0; j < N; j++)
@@ -147,7 +138,6 @@ bool check(int** arr) {
 			}
 		}
 	}
-	// Identical neighboring cells
 	for (int i = 0; i < N - 1; i++)
 	{
 		for (int j = 0; j < N - 1; j++)
@@ -162,12 +152,9 @@ bool check(int** arr) {
 			return 1;
 		}
 	}
-	// No moves left
 	return 0;
 }
 
-
-// Shift cells up
 bool movefuncUP(int** arr) {
 	bool ind = 1;
 	int l;
@@ -203,7 +190,6 @@ bool movefuncUP(int** arr) {
 	return ind;
 }
 
-// Shift cells down
 bool movefuncDOWN(int** arr) {
 	bool ind = 1;
 	int l;
@@ -239,7 +225,6 @@ bool movefuncDOWN(int** arr) {
 	return ind;
 }
 
-// Shift cells left
 bool movefuncLEFT(int** arr) {
 	bool ind = 1;
 	int l;
@@ -275,8 +260,6 @@ bool movefuncLEFT(int** arr) {
 	return ind;
 }
 
-
-// Shift cells right
 bool movefuncRIGHT(int** arr) {
 	bool ind = 1;
 	int l;
@@ -312,14 +295,11 @@ bool movefuncRIGHT(int** arr) {
 	return ind;
 }
 
-
-// Start new match
 void match(int** arr) {
 	bool ind;
 	proceed = true;
 	first2048 = true;
 
-	// Reseting field
 	for (int i = 0; i < N; i++)
 	{
 		for (int j = 0; j < N; j++)
@@ -328,21 +308,18 @@ void match(int** arr) {
 		}
 	}
 	score = 0;
-	// Initial fill
 	randfill(arr);
 	randfill(arr);
 
 	printField(arr);
 	do
 	{
-		// Get user move
 		do
 		{
 			ind = 1;
 			char move = _getch();
 			switch (move)
 			{
-				// Ind = 0 if at least 1 cell was moved
 			case 72: case 'w': case 'ц':  ind = movefuncUP(arr);     break;
 			case 80: case 's': case 'ы':  ind = movefuncDOWN(arr);   break;
 			case 75: case 'a': case 'ф':  ind = movefuncLEFT(arr);   break;
@@ -350,11 +327,11 @@ void match(int** arr) {
 			}
 			cin.clear();
 		} while (ind);
-		// Add new elem to field
+
 		randfill(arr);
-		// Print field
+
 		printField(arr);
-		// Check for ability to make move
+
 	} while (proceed && check(arr));
 
 	cout << "End of the game!" << endl;
@@ -375,11 +352,8 @@ void match(int** arr) {
 	while (getchar() != '\n');
 }
 
-
-// Question to user: exit or new game
 bool exitFunction() {
 	char v;
-	// Try to get an answer 10 times
 	for (int i = 0; i < 10; i++)
 	{
 		cout << "Play again? (y/n) : ";
@@ -387,19 +361,15 @@ bool exitFunction() {
 		while (getchar() != '\n');
 		switch (v)
 		{
-		case 'y': case 'Y': return 1;	// New game
-		case 'n': case 'N': return 0;	// Exit
+		case 'y': case 'Y': return 1;
+		case 'n': case 'N': return 0;
 		default: cout << "*** Enter answer in y/n format! ***\n";
 		}
 	}
-	// If no answer after 10 times, exit
 	return 0;
 }
 
-
-// New game
 void playgame() {
-	// Reading highscore from file
 	ifstream Highsore("highscore.txt");
 	if (Highsore)
 	{
@@ -411,7 +381,6 @@ void playgame() {
 	}
 	Highsore.close();
 
-	// Creating field
 	int** arr = new int* [N];
 	for (int i = 0; i < N; i++)
 	{
@@ -419,13 +388,11 @@ void playgame() {
 	}
 
 	do {
-		// Launch game 
 		match(arr);
 	} while (exitFunction());
 
 	printmenu();
 
-	// Clear memory
 	for (int i = 0; i < N; i++)
 		delete[] arr[i];
 	delete[] arr;

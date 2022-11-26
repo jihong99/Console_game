@@ -1,19 +1,19 @@
+#pragma once
 #include <iostream>
-#include "menu.h";
 using namespace std;
 
 char tboard[3][3] = { {'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'} };
-int input; //ì…ë ¥
-int r, c; //ë°°ì—´ì˜ í–‰ì—´
-char mark = 'X'; //ë§ˆí¬
-bool draw = false; //ë¬´ìŠ¹ë¶€ ì—¬ë¶€
-bool trd = false; //ì •í™•í•œ ë™ì‘ ì—¬ë¶€
+int input; //ÀÔ·Â
+int r, c; //¹è¿­ÀÇ Çà¿­
+char mark = 'X'; //¸¶Å©
+bool draw = false; //¹«½ÂºÎ ¿©ºÎ
+bool trd = false; //Á¤È®ÇÑ µ¿ÀÛ ¿©ºÎ
 
 
 void main_screen()
 {
-    cout << "\t\t\t\t\t\tTic-Tac-Toe ê²Œì„ \n\n\n ";
-    cout << "\t\t\t\t\t\tí”Œë ˆì´ì–´ 1 [X] \t í”Œë ˆì´ì–´ 2 [O] \n\n\n ";
+    cout << "\t\t\t\t\t\tTic-Tac-Toe °ÔÀÓ \n\n\n ";
+    cout << "\t\t\t\t\t\tÇÃ·¹ÀÌ¾î 1 [X] \t ÇÃ·¹ÀÌ¾î 2 [O] \n\n\n ";
     cout << "\t\t\t\t\t\t     |     |     \n";
     cout << "\t\t\t\t\t\t  " << tboard[0][0] << "  |  " << tboard[0][1] << "  |  " << tboard[0][2] << " \n";
     cout << "\t\t\t\t\t\t_____|_____|_____\n";
@@ -30,11 +30,11 @@ void in_game()
 {
     if (mark == 'X')
     {
-        cout << "\t\t\t\t\t\tí”Œë ˆì´ì–´ 1 [X] ì…ë ¥ : ";
+        cout << "\t\t\t\t\t\tÇÃ·¹ÀÌ¾î 1 [X] ÀÔ·Â : ";
     }
     else
     {
-        cout << "\t\t\t\t\t\tí”Œë ˆì´ì–´ 2 [O] ì…ë ¥ : ";
+        cout << "\t\t\t\t\t\tÇÃ·¹ÀÌ¾î 2 [O] ÀÔ·Â : ";
     }
     cin >> input;
     system("cls");
@@ -42,7 +42,7 @@ void in_game()
 
 
 
-    switch (input) //ìˆ«ìë¥¼ ì…ë ¥í•  ì‹œ
+    switch (input) //¼ıÀÚ¸¦ ÀÔ·ÂÇÒ ½Ã
     {
     case 1:
         r = 0;
@@ -81,7 +81,7 @@ void in_game()
         c = 2;
         break;
     default:
-        cout << "ì˜ëª»ëœ ì…ë ¥ì„ ";
+        cout << "Àß¸øµÈ ÀÔ·ÂÀÓ ";
     }
 
 
@@ -103,7 +103,7 @@ void in_game()
 
     else
     {
-        cout << "ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”. \n";
+        cout << "´Ù½Ã ½ÃµµÇÏ¼¼¿ä. \n";
         trd = false;
     }
 
@@ -112,7 +112,7 @@ void in_game()
 
 
 
-bool gameover() //ê²Œì„ ì˜¤ë²„ ì¡°ê±´
+bool gameover() //°ÔÀÓ ¿À¹ö Á¶°Ç
 {
 
     for (int i = 0; i < 3; i++)
@@ -142,7 +142,6 @@ bool gameover() //ê²Œì„ ì˜¤ë²„ ì¡°ê±´
 
 void maingame(void)
 {
-    system("cls");
     while (1) {
 
         mark = 'X';
@@ -155,7 +154,7 @@ void maingame(void)
             }
         }
 
-        cout << "\t\t\t\t\t\tê²Œì„ì„ ì‹œì‘í•´ì£¼ì„¸ìš”! \n\n\n";
+        cout << "\t\t\t\t\t\t°ÔÀÓÀ» ½ÃÀÛÇØÁÖ¼¼¿ä! \n\n\n";
         main_screen();
 
         while (!gameover())
@@ -168,8 +167,8 @@ void maingame(void)
         }
         if (draw)
         {
-            cout << "\t\t\t\t\t\të¬´ìŠ¹ë¶€ ì…ë‹ˆë‹¤. \n";
-            cout << "\t\t\t\t\t\të‹¤ì‹œ í•˜ë ¤ë©´ 0, ì¢…ë£Œí•˜ë ¤ë©´ ì•„ë¬´ë²„íŠ¼ì´ë‚˜ ëˆ„ë¥´ì„¸ìš” : ";
+            cout << "\t\t\t\t\t\t¹«½ÂºÎ ÀÔ´Ï´Ù. \n";
+            cout << "\t\t\t\t\t\t´Ù½Ã ÇÏ·Á¸é 0, Á¾·áÇÏ·Á¸é ¾Æ¹«¹öÆ°ÀÌ³ª ´©¸£¼¼¿ä : ";
             cin >> a;
 
             if (a == 0) {
@@ -183,8 +182,8 @@ void maingame(void)
         {
             if (mark == 'X')
             {
-                cout << "\t\t\t\t\t\tí”Œë ˆì´ì–´ 2 [O]ì˜ ìŠ¹ë¦¬ì…ë‹ˆë‹¤. \n";
-                cout << "\t\t\t\t\t\të‹¤ì‹œ í•˜ë ¤ë©´ 0, ì¢…ë£Œí•˜ë ¤ë©´ ì•„ë¬´ë²„íŠ¼ì´ë‚˜ ëˆ„ë¥´ì„¸ìš” : ";
+                cout << "\t\t\t\t\t\tÇÃ·¹ÀÌ¾î 2 [O]ÀÇ ½Â¸®ÀÔ´Ï´Ù. \n";
+                cout << "\t\t\t\t\t\t´Ù½Ã ÇÏ·Á¸é 0, Á¾·áÇÏ·Á¸é ¾Æ¹«¹öÆ°ÀÌ³ª ´©¸£¼¼¿ä : ";
                 cin >> a;
 
                 if (a == 0) {
@@ -192,13 +191,12 @@ void maingame(void)
                     continue;
                 }
                 else
-                    printmenu();
-
+                    break;
             }
             else
             {
-                cout << "\t\t\t\t\t\tí”Œë ˆì´ì–´ 1 [X] ì˜ ìŠ¹ë¦¬ì…ë‹ˆë‹¤. \n";
-                cout << "\t\t\t\t\t\të‹¤ì‹œ í•˜ë ¤ë©´ 0, ë©”ë‰´ë¡œ ëŒì•„ê°€ë ¤ë©´ ì•„ë¬´ë²„íŠ¼ì´ë‚˜ ëˆ„ë¥´ì„¸ìš” : ";
+                cout << "\t\t\t\t\t\tÇÃ·¹ÀÌ¾î 1 [X] ÀÇ ½Â¸®ÀÔ´Ï´Ù. \n";
+                cout << "\t\t\t\t\t\t´Ù½Ã ÇÏ·Á¸é 0, Á¾·áÇÏ·Á¸é ¾Æ¹«¹öÆ°ÀÌ³ª ´©¸£¼¼¿ä : ";
                 cin >> a;
 
                 if (a == 0) {
@@ -206,11 +204,12 @@ void maingame(void)
                     continue;
                 }
                 else
-                    printmenu();
+                    break;
             }
         }
 
     }
 
     return;
+
 }

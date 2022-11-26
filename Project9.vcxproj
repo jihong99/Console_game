@@ -144,11 +144,13 @@
     <ClCompile Include="play2048.cpp" />
     <ClCompile Include="playDino.cpp" />
     <ClCompile Include="playSnake.cpp" />
+    <ClCompile Include="playTic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console2048.h" />
     <ClInclude Include="ConsoleDino.h" />
     <ClInclude Include="ConsoleSnake.h" />
+    <ClInclude Include="ConsoleTic.h" />
     <ClInclude Include="menu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

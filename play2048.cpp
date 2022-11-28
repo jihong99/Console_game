@@ -324,6 +324,7 @@ void match(int** arr) {
 			case 80: case 's': case 'ы':  ind = movefuncDOWN(arr);   break;
 			case 75: case 'a': case 'ф':  ind = movefuncLEFT(arr);   break;
 			case 77: case 'd': case 'в':  ind = movefuncRIGHT(arr);  break;
+			case 27: return;
 			}
 			cin.clear();
 		} while (ind);
